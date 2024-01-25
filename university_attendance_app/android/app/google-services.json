@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25728399952",
+    "project_id": "university-attendance-ap-70fad",
+    "storage_bucket": "university-attendance-ap-70fad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25728399952:android:513985692a1375334baf55",
+        "android_client_info": {
+          "package_name": "com.example.university_attendance_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzHf60NXx9VpcED3tFv2_lHvpIuYPFYv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
