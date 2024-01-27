@@ -39,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                   color: Color.fromRGBO(255, 255, 255, 0.6),
                 ),
                 child: SingleChildScrollView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
 
@@ -76,31 +76,31 @@ class LoginScreen extends StatelessWidget {
                           keyboardType: TextInputType.emailAddress,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 70,
                       ),
                       MyElevatedButton(
                         onPressed: () {},
                         borderRadius: BorderRadius.circular(40),
                         width: 200,
-                        child: Text(
+                        child: const Text(
                           "Login",
                           style: TextStyle(
                             color: Colors.white,
                           ),
                         ),
                       ),
-                      SizedBox(height: 15,),
+                      const SizedBox(height: 15,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Don't have an account??"),
+                          const Text("Don't have an account??"),
                           TextButton(
                             onPressed: () {
                               Navigator.pushReplacementNamed(
                                   context, signUpRoute);
                             },
-                            child: Text("SignUp"),
+                            child: const Text("SignUp"),
                           ),
                         ],
                       ),

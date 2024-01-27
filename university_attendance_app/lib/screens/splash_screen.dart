@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => OnboardingScreen(),
+        builder: (context) => const OnboardingScreen(),
       ),
     );
   }
@@ -38,15 +38,15 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 100,
               height: 100,
               color: Colors.blue,
-              child: Icon(
+              child: const Icon(
                 Icons.calendar_month_rounded,
                 size: 100,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            Text("University Attendence App"),
+            const Text("University Attendence App"),
           ],
         ),
       ),

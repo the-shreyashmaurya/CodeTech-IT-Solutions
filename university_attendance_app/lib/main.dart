@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const SplashScreen(),
         // '/main' :(context) => const MainScreen(),
       },
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

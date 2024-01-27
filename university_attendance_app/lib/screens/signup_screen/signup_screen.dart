@@ -114,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
 
                           // Semester Text field
-                          Container(
+                          SizedBox(
                             width: 200,
                             child: Padding(
                               padding:
@@ -161,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
