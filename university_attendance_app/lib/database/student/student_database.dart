@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:university_attendance_app/database/student/student_model.dart';
 
 class StudentDatabase {
   // var studentCollection =
@@ -12,21 +13,28 @@ class StudentDatabase {
     required String course,
     required String email,
     required String semester,
-  }) {
-    studentCollection.doc(id).set({
+  }) async {
+    await studentCollection.doc(id).set({
       "name": name,
       "prn": prn,
       "course": course,
       "email": email,
       "semester": semester
     });
-    print("Added to student database");
   }
 
+
   // Get Student Details
-  getStudentDetails({required String id}) {
-    Future<DocumentSnapshot<Map<String, dynamic>>> StudentDetails =
-        studentCollection.doc(id).get();
-    print(StudentDetails);
+  Future<StudentModel> getStudentDetails({required String? id}) async {
+    var record = await studentCollection.doc(id).get();
+
+    StudentModel studentDetails = StudentModel(
+        name: record["name"],
+        prn: record["prn"],
+        email: record["email"],
+        course: record["course"],
+        semester: record["semester"]);
+
+    return studentDetails;
   }
 }
