@@ -3,12 +3,16 @@ import 'package:university_attendance_app/constants/elevatedButton.dart';
 import 'package:university_attendance_app/constants/inputdecoration.dart';
 import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
+import 'package:university_attendance_app/screens/login_screen/firebase_login.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -56,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: TextField(
-                          // autofocus: true,
+                          controller: emailController,
                           decoration: normalTextFieldDecoration(
                               labletext: "Email", hintText: ""),
                           keyboardType: TextInputType.emailAddress,
@@ -70,6 +74,7 @@ class LoginScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: TextField(
+                          controller: passwordController,
                           obscureText: true,
                           decoration: normalTextFieldDecoration(
                               labletext: "Password", hintText: ""),
@@ -80,7 +85,13 @@ class LoginScreen extends StatelessWidget {
                         height: 70,
                       ),
                       MyElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await SignInFirebase().mySignIn(
+                              email: emailController.text,
+                              password: passwordController.text);
+                          // Navigate to Main page
+                          Navigator.pushReplacementNamed(context, studentRoute);
+                        },
                         borderRadius: BorderRadius.circular(40),
                         width: 200,
                         child: const Text(
@@ -90,7 +101,9 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 15,),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

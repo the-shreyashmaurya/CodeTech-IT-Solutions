@@ -1,22 +1,10 @@
 import "package:firebase_auth/firebase_auth.dart";
 
 class SignUpFirebase {
-  String email = "";
-  String password = "";
-
-  Future<void> mySignUp(
+  Future<UserCredential> mySignUp(
       {required String email, required String password}) async {
-    email = this.email;
-    password = this.password;
-    // try {
-    await FirebaseAuth.instance
+    var userCredential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    print("------------------------------------------------------");
+    return userCredential;
   }
-  // on FirebaseAuthException {
-  //   print("Auth Exception");
-  // catch (e) {
-  //   print(e);
-  // }
-  // }
 }

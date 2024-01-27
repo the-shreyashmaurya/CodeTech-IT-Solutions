@@ -3,6 +3,7 @@ import 'package:university_attendance_app/constants/elevatedButton.dart';
 import 'package:university_attendance_app/constants/inputdecoration.dart';
 import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
+import 'package:university_attendance_app/database/student/student_database.dart';
 import 'package:university_attendance_app/screens/signup_screen/firebase_signup.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -97,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                       ),
+                      
                       // Course and Semester Text field
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,13 +146,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: 30,
                       ),
+                      
+                      // SignUP button
                       MyElevatedButton(
                         onPressed: () async {
-                          await SignUpFirebase().mySignUp(
-                            email: emailController.text,
-                            password: passwordController.text,
-                          );
-                          Navigator.pushReplacementNamed(context, loginRoute);
+                          try {
+                            // Sign Up User to firebase Authentication
+                            var userCredential =
+                                await SignUpFirebase().mySignUp(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            );
+
+                            // Save User Data to Firebase Firestore
+                            StudentDatabase().saveStudentDetails(
+                                id: userCredential.user?.uid,
+                                name: nameController.text,
+                                prn: prnController.text,
+                                course: courseController.text,
+                                email: emailController.text,
+                                semester: semesterController.text);
+
+                            // Navigate to Student Page
+                            Navigator.pushReplacementNamed(
+                                context, studentRoute);
+                          } catch (e) {
+                            print("SignUp Error");
+                          }
                         },
                         borderRadius: BorderRadius.circular(40),
                         width: 200,
@@ -164,6 +186,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: 15,
                       ),
+                      
+                      // Go to Login page
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
