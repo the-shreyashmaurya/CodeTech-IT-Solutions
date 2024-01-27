@@ -24,6 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
+      extendBody: true,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -160,7 +161,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                             // Save User Data to Firebase Firestore
                             StudentDatabase().saveStudentDetails(
-                                id: userCredential.user?.uid,
+                                id: userCredential.user!.uid,
                                 name: nameController.text,
                                 prn: prnController.text,
                                 course: courseController.text,

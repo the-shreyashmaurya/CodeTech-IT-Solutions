@@ -7,7 +7,7 @@ class StudentDatabase {
 
   // Save students Details on Signup
   saveStudentDetails({
-    required String? id,
+    required String id,
     required String name,
     required String prn,
     required String course,
@@ -25,7 +25,7 @@ class StudentDatabase {
 
 
   // Get Student Details
-  Future<StudentModel> getStudentDetails({required String? id}) async {
+  Future<StudentModel> getStudentDetails({required String id}) async {
     var record = await studentCollection.doc(id).get();
 
     StudentModel studentDetails = StudentModel(
