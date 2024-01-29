@@ -16,8 +16,8 @@ TextStyle subTitleTextStyle = const TextStyle(
 
 TextStyle impNormalTextStyle = TextStyle(
   fontFamily: "Roboto",
-  fontSize: 16,
-  fontWeight: FontWeight.normal,
+  fontSize: 15,
+  fontWeight: FontWeight.bold,
   color: Colors.grey.shade800,
 );
 

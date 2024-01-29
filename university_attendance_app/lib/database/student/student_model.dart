@@ -2,30 +2,34 @@ class StudentModel {
   String name;
   String prn;
   String email;
-  String course;
+  String degree;
   String semester;
+  List<dynamic>? courselist;
 
   StudentModel({
     required this.name,
     required this.prn,
     required this.email,
-    required this.course,
+    required this.degree,
     required this.semester,
+    this.courselist,
   });
 
   factory StudentModel.fromJson(Map<String, dynamic> json) => StudentModel(
         name: json["name"],
         prn: json["prn"],
         email: json["email"],
-        course: json["course"],
+        degree: json["degree"],
         semester: json["semester"],
+        courselist: json["courselist"],
       );
 
   Map<String, dynamic> toJson() => {
         "name": name,
         "prn": prn,
         "email": email,
-        "course": course,
+        "degree": degree,
         "semester": semester,
+        "courselist": courselist,
       };
 }
