@@ -6,7 +6,7 @@ class AttendanceRecordsDatabase {
       FirebaseFirestore.instance.collection('attendanceRecords');
 
   Future<void> initializeAttendanceForToday(String studentId) async {
-    // Get the current date
+    // Get the current date DD/MM/YYYY
     String formattedDate =
         "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
 
