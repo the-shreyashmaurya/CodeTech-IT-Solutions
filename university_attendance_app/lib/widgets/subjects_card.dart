@@ -3,9 +3,6 @@ import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/attendanceRecords/attendanceRecords_database.dart';
 import 'package:university_attendance_app/database/courses/courses_database.dart';
 import 'package:university_attendance_app/database/courses/courses_model.dart';
-// import 'package:university_attendance_app/database/courses/courses_database.dart';
-// import 'package:university_attendance_app/database/courses/courses_model.dart';
-// import 'package:university_attendance_app/screens/course_screen/course_screen.dart';
 
 class SubjectsCard extends StatefulWidget {
   final String courseId;
@@ -25,21 +22,30 @@ class SubjectsCard extends StatefulWidget {
 }
 
 class _SubjectsCardState extends State<SubjectsCard> {
-  getCourseDetails() async {
-    CoursesModel courseDetailsModel =
-        await CoursesDatabase().getCourseDetails(courseId: widget.courseId);
-    var course = courseDetailsModel.toJson();
-    setState(() {
-      widget.courseDetails = course;
-      widget.isLoading = false;
-    });
-  }
+  Color borderColor = Colors.red;
 
   @override
   void initState() {
-    // TODO: implement initState
-    getCourseDetails();
     super.initState();
+    ayncInit();
+  }
+
+  ayncInit() async {
+    getCourseDetails();
+    var isPresent = await AttendanceRecordsDatabase()
+        .checkIfAttendanceAlreadyMarked(
+            courseId: widget.courseId,
+            studentId: widget.studentId,
+            date: widget.date);
+    if (isPresent == true) {
+      borderColor = Colors.green;
+
+      setState(() {});
+    } else {
+      borderColor = Colors.red;
+
+      setState(() {});
+    }
   }
 
   @override
@@ -51,9 +57,21 @@ class _SubjectsCardState extends State<SubjectsCard> {
     } else {
       return GestureDetector(
         onTap: () async {
-          // Update Attendance
-          await AttendanceRecordsDatabase()
-              .updateAttendanceForCourse(widget.studentId, widget.courseId);
+          // If attendance already marked
+          if (borderColor == Colors.green) {
+            print("Already Marked");
+          } else {
+            // Update Attendance
+            await AttendanceRecordsDatabase().addAttendance(
+                courseId: widget.courseId,
+                studentId: widget.studentId,
+                date: widget.date,
+                isPresent: true);
+            // Change Border Color
+            borderColor = Colors.green;
+
+            setState(() {});
+          }
         },
         child: Container(
           margin: EdgeInsets.only(right: 2, left: 2),
@@ -65,7 +83,7 @@ class _SubjectsCardState extends State<SubjectsCard> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
                 side: BorderSide(
-                  color: Colors.red,
+                  color: borderColor,
                   width: 2,
                 )),
             child: Column(
@@ -114,5 +132,15 @@ class _SubjectsCardState extends State<SubjectsCard> {
         ),
       );
     }
+  }
+
+  getCourseDetails() async {
+    CoursesModel courseDetailsModel =
+        await CoursesDatabase().getCourseDetails(courseId: widget.courseId);
+    var course = courseDetailsModel.toJson();
+    setState(() {
+      widget.courseDetails = course;
+      widget.isLoading = false;
+    });
   }
 }

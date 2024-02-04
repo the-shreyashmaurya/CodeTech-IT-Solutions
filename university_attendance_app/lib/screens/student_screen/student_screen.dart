@@ -27,11 +27,8 @@ class _StudentScreenState extends State<StudentScreen> {
 
   asyncInit() async {
     currentUserId = await FirebaseAuth.instance.currentUser!.uid;
-
-    await AttendanceRecordsDatabase()
-        .initializeAttendanceForToday(currentUserId);
-    var currentStudentModel = await StudentDatabase()
-        .getStudentDetails(id: currentUserId);
+    var currentStudentModel =
+        await StudentDatabase().getStudentDetails(id: currentUserId);
     currentStudentDetails = currentStudentModel.toJson();
     setState(() {
       isLoading = false;
@@ -76,7 +73,12 @@ class _StudentScreenState extends State<StudentScreen> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () async {},
+                        onPressed: () {
+                          print(currentUserId);
+                          AttendanceRecordsDatabase()
+                              .getAttendanceOfSingleStudent(
+                                  studentId: currentUserId);
+                        },
                         icon: Icon(Icons.notifications_active, size: 30),
                       )
                     ],

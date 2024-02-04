@@ -27,12 +27,12 @@ class _CourseScreenState extends State<CourseScreen> {
   }
 
   asyncInit() async {
-    await AttendanceRecordsDatabase().addAttendanceRecord(
-        attendanceRecordsModel: AttendanceRecordsModel(
-            courseId: widget.courseId,
-            studentId: widget.studentId,
-            date: "yesterday",
-            isPresent: false));
+    // await AttendanceRecordsDatabase().addAttendanceRecord(
+    //     attendanceRecordsModel: AttendanceRecordsModel(
+    //         courseId: widget.courseId,
+    //         studentId: widget.studentId,
+    //         date: "yesterday",
+    //         isPresent: false));
   }
 
   @override
