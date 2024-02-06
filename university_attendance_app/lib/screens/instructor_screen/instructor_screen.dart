@@ -130,7 +130,7 @@ class _InstructorScreenState extends State<InstructorScreen> {
                   height: 25,
                 ),
 
-                // Created Course Gridview
+                // Created Course Gridview 
                 SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: GridView.builder(
