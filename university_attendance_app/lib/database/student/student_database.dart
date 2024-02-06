@@ -26,4 +26,17 @@ class StudentDatabase {
 
     return studentDetails;
   }
+
+  Future<bool> checkStudentExists({required String id}) async {
+    print("clicked");
+    var record = await studentCollection
+        .where('id', isEqualTo: id)
+        .limit(1)
+        .get();
+    if (record.docs.length == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

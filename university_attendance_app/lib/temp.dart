@@ -3,7 +3,6 @@ import 'package:university_attendance_app/constants/elevatedButton.dart';
 import 'package:university_attendance_app/constants/inputdecoration.dart';
 import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
-import 'package:university_attendance_app/database/instructor/instructor_database.dart';
 import 'package:university_attendance_app/screens/login_screen/firebase_login.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -88,22 +87,11 @@ class LoginScreen extends StatelessWidget {
                       MyElevatedButton(
                         onPressed: () async {
                           // SignIn User
-                          String userId = await SignInFirebase().mySignIn(
+                          await SignInFirebase().mySignIn(
                               email: emailController.text,
                               password: passwordController.text);
-
-                          // Check if User is Student or teacher
-                          bool isInstructor = await InstructorDatabase()
-                              .checkInstructorExists(id: userId);
-
-                          if (isInstructor) {
-                            Navigator.pushReplacementNamed(
-                                context, instructorRoute);
-                          } else {
-                            // Navigate to Main page
-                            Navigator.pushReplacementNamed(
-                                context, studentRoute);
-                          }
+                          // Navigate to Main page
+                          Navigator.pushReplacementNamed(context, studentRoute);
                         },
                         borderRadius: BorderRadius.circular(40),
                         width: 200,

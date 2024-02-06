@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:university_attendance_app/screens/course_screen/add_course_screen.dart';
+import 'package:university_attendance_app/screens/instructor_screen/instructor_screen.dart';
 import 'package:university_attendance_app/screens/login_screen/login_screen.dart';
 import 'package:university_attendance_app/screens/onboarding_screen.dart';
 import 'package:university_attendance_app/screens/signup_screen/signup_screen.dart';
@@ -28,6 +30,8 @@ class MyApp extends StatelessWidget {
         '/onboarding': (context) => const OnboardingScreen(),
         '/splash': (context) => const SplashScreen(),
         '/student' :(context) => const StudentScreen(),
+        '/instructor':(context)=> const InstructorScreen(),
+        '/addCourse':(context) => const AddCourseScreen(),
         // '/teacher' :(context) => const 
       },
       home: const SplashScreen(),
