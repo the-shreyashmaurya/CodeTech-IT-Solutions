@@ -70,20 +70,23 @@ class _InstructorCourseCardState extends State<InstructorCourseCard> {
                       bottom: Radius.circular(20),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.courseDetails["name"],
-                        style: impNormalTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        widget.courseDetails["instructor"],
-                        style: normalTextStyle,
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.courseDetails["name"],
+                          style: impNormalTextStyle,
+                          textAlign: TextAlign.left,
+                        ),
+                        Text(
+                          widget.courseDetails["instructor"],
+                          style: normalTextStyle,
+                        ),
+                      ],
+                    ),
                   ),
                 ))
               ],

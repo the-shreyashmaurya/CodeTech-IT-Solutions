@@ -131,24 +131,22 @@ class _InstructorScreenState extends State<InstructorScreen> {
                 ),
 
                 // Created Course Gridview 
-                SingleChildScrollView(
+                GridView.builder(
+                  physics: ScrollPhysics(),
+                  shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemCount: currentInstructorDetails['createdCourses'].length,
-                    itemBuilder: (context, index) {
-                      return InstructorCourseCard(
-                          courseId: currentInstructorDetails['createdCourses']
-                              [index]);
-                    },
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 1,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
                   ),
+                  itemCount: currentInstructorDetails['createdCourses'].length,
+                  itemBuilder: (context, index) {
+                    return InstructorCourseCard(
+                        courseId: currentInstructorDetails['createdCourses']
+                            [index]);
+                  },
                 ),
               ],
             ),

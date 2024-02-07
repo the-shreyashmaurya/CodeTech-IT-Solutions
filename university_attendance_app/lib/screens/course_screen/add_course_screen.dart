@@ -38,6 +38,8 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.all(8),
               width: double.infinity,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(40)),
@@ -120,7 +122,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
         onPressed: () {
           Navigator.pushReplacementNamed(context, instructorRoute);
         },
-        child: Icon(Icons.arrow_back_ios),
+        child: Icon(Icons.arrow_back),
       ),
     );
     ;
