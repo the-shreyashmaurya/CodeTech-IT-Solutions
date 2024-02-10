@@ -18,11 +18,25 @@ class _MainScreenState extends State<MainScreen> {
           fit: BoxFit.cover,
         ),
       ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: Column(
-            children: [],
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+          colors: [Colors.black54, Colors.black45],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        )),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Text('Press'))
+              ],
+            ),
           ),
         ),
       ),
