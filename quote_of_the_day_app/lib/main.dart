@@ -12,7 +12,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  SharedPreferences pref;
+  final SharedPreferences pref;
   MyApp({super.key, required this.pref});
 
   @override

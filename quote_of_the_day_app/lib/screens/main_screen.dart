@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:quote_of_the_day_app/main.dart';
+import 'package:quote_of_the_day_app/screens/liked_quotes_screen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
-  SharedPreferences prefs;
+  final SharedPreferences prefs;
   MainScreen({super.key, required this.prefs});
 
   @override
@@ -17,13 +17,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   String quoteText = "";
   bool isLoading = true;
+  bool isLiked = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getQuotes();
-    SharedPreferences pref = widget.prefs;
   }
 
   @override
@@ -64,12 +64,32 @@ class _MainScreenState extends State<MainScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.menu,
-                        color: Colors.white70,
-                        size: 35,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10, top: 10),
+                      child: PopupMenuButton(
+                        onSelected: (value) {
+                          if (value == 'likedQuotes') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LikedQuotesScreen(
+                                  pref: widget.prefs,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'likedQuotes',
+                            child: Text('Liked Quotes'),
+                          ),
+                        ],
+                        icon: Icon(
+                          Icons.menu,
+                          color: Colors.white70,
+                          size: 35,
+                        ),
                       ),
                     ),
                   ],
@@ -127,20 +147,46 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     IconButton(
                       onPressed: () async {
-                        List<String> savedQuotes =
-                            widget.prefs.getStringList("savedQuotes") ?? [];
-                        savedQuotes.add(quoteText);
+                        if (isLiked == false) {
+                          // Get the Saved Quotes List
+                          List<String> savedQuotes =
+                              widget.prefs.getStringList("savedQuotes") ?? [];
 
-                        bool isSaved = await widget.prefs
-                            .setStringList("savedQuotes", savedQuotes);
-                        print(isSaved);
-                        print(widget.prefs.getStringList("savedQuotes"));
+                          // Add the new Quote to the List
+                          savedQuotes.add(quoteText);
+                          savedQuotes = savedQuotes.reversed.toList();
+
+                          // Save the new Saved Quotes List
+                          await widget.prefs
+                              .setStringList("savedQuotes", savedQuotes);
+
+                          // Change Liked Icon
+                          setState(
+                            () {
+                              List<String> savedQuotes =
+                                  widget.prefs.getStringList("savedQuotes") ??
+                                      [];
+
+                              if (savedQuotes.contains(quoteText)) {
+                                isLiked = true;
+                              } else {
+                                isLiked = false;
+                              }
+                            },
+                          );
+                        }
                       },
-                      icon: Icon(
-                        Icons.bookmark_add_outlined,
-                        color: Colors.white70,
-                        size: 35,
-                      ),
+                      icon: isLiked
+                          ? Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                              size: 35,
+                            )
+                          : Icon(
+                              Icons.favorite_outline,
+                              color: Colors.white70,
+                              size: 35,
+                            ),
                     ),
                     SizedBox(
                       width: 30,
@@ -181,5 +227,9 @@ class _MainScreenState extends State<MainScreen> {
       quoteText = result["slip"]["advice"];
       isLoading = false;
     });
+  }
+
+  void refreshLike() {
+    widget.prefs.getStringList('savedQuotes');
   }
 }
