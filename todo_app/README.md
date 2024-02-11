@@ -1,16 +1,18 @@
-# todo_app
+# TO-DO LIST APP
+Create a simple to-do list app that allows users to add, edit, and delete tasks.
 
-A new Flutter project.
+Implement features like task priorities, due dates, and task completion status.
 
-## Getting Started
+Home Screen: Display a list of tasks with titles and completion status.
 
-This project is a starting point for a Flutter application.
+Task Creation: Allow users to add new tasks with titles and optional descriptions.
 
-A few resources to get you started if this is your first Flutter project:
+Task Editing: Provide the ability to edit task titles and descriptions. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Task Completion: Allow users to mark tasks as completed or active. 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Task Deletion: Add the option to delete tasks from the list.
+
+Local Data Storage: Save tasks locally on the device for data persistence. 
+
+User Interface: Design an intuitive and user-friendly interface.
