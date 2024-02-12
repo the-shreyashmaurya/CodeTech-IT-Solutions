@@ -18,52 +18,70 @@ class AddTodoScreen extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              TextField(
-                controller: titleController,
-                decoration: InputDecoration(
-                  label: Text("Title"),
-                ),
-              ),
-              TextField(
-                controller: descriptionController,
-                decoration: InputDecoration(
-                  label: Text("Description"),
-                ),
-              ),
-              TextField(
-                controller: dateController,
-                decoration: InputDecoration(
-                  label: Text("Date"),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  var todoBox = Hive.box("todoBox");
-
-                  // Make a todoModel
-                  TodoModel myTodo = TodoModel(
-                      title: titleController.text,
-                      description: descriptionController.text,
-                      dueDate: dateController.text);
-
-                  // Add to todoBox
-                  todoBox.add(myTodo);
-                  // myTodo.save();
-
-                  // Navigate back to main page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainScreen(),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: titleController,
+                      decoration: InputDecoration(
+                        label: Text("Title"),
+                      ),
                     ),
-                  );
-                },
-                child: Text("Add"),
+                    TextField(
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                        label: Text("Description"),
+                      ),
+                    ),
+                    TextField(
+                      controller: dateController,
+                      decoration: InputDecoration(
+                        label: Text("Date"),
+                      ),
+                    ),
+                
+                    SizedBox(height: 20,),
+                    
+                    Container(
+                      width: 140,
+                      height: 60,
+                      child: ElevatedButton(
+                        style: ButtonStyle(),
+                        
+                        onPressed: () {
+                          var todoBox = Hive.box("todoBox");
+                                      
+                          // Make a todoModel
+                          TodoModel myTodo = TodoModel(
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              dueDate: dateController.text);
+                                      
+                          // Add to todoBox
+                          todoBox.add(myTodo);
+                          // myTodo.save();
+                                      
+                          // Navigate back to main page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainScreen(),
+                            ),
+                          );
+                        },
+                        child: Text("Add"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ),

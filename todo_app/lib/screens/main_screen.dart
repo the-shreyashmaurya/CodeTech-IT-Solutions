@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_app/screens/add_todo_screen.dart';
+import 'package:todo_app/widgets/tile_widget.dart';
+import 'package:todo_app/widgets/tile_widget2.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -29,45 +31,58 @@ class _MainScreenState extends State<MainScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              ReorderableListView(
-                physics: ScrollPhysics(),
-                shrinkWrap: true,
-                onReorder: (oldIndex, newIndex) async {
-                  // Some Changes are needed while moving downwards
-                  if (oldIndex < newIndex) {
-                    newIndex--;
-                  }
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    "Your Todo's",
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: Colors.black54,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ReorderableListView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    onReorder: (oldIndex, newIndex) async {
+                      // Some Changes are needed while moving downwards
+                      if (oldIndex < newIndex) {
+                        newIndex--;
+                      }
 
-                  // Get the tile we are moving
-                  var tile = todoList.removeAt(oldIndex);
+                      // Get the tile we are moving
+                      var tile = todoList.removeAt(oldIndex);
 
-                  //Place the tile in new position
-                  todoList.insert(newIndex, tile);
+                      //Place the tile in new position
+                      todoList.insert(newIndex, tile);
 
-                  await todoBox.clear();
+                      await todoBox.clear();
 
-                  for (var todo in todoList) {
-                    todoBox.add(todo);
-                  }
+                      for (var todo in todoList) {
+                        todoBox.add(todo);
+                      }
 
-                  setState(() {});
-                },
-                children: [
-                  for (int i = 0; i < todoList.length; i++)
-                    Container(
-                      key: Key('$i'),
-                      color: Colors.green,
-                      child: Text(
-                        todoList[i].title,
-                        style: TextStyle(fontSize: 30, color: Colors.black),
-                      ),
-                    ),
-                ],
-              )
-            ],
+                      setState(() {});
+                    },
+                    itemCount: todoList.length,
+                    itemBuilder: (context, index) {
+                      return TileWidget2(index: index,todoList: todoList,
+                        
+                        key: Key("$index"),
+                      );
+                    })
+              ,SizedBox(),
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
@@ -91,3 +106,4 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 }
+
