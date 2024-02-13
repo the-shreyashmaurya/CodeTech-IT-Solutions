@@ -3,14 +3,21 @@ import 'package:hive/hive.dart';
 import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/screens/main_screen.dart';
 
-class AddTodoScreen extends StatelessWidget {
+class AddTodoScreen extends StatefulWidget {
   const AddTodoScreen({super.key});
 
   @override
+  State<AddTodoScreen> createState() => _AddTodoScreenState();
+}
+
+class _AddTodoScreenState extends State<AddTodoScreen> {
+  DateTime selectedDate = DateTime.now();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController titleController = TextEditingController();
-    TextEditingController descriptionController = TextEditingController();
-    TextEditingController dateController = TextEditingController();
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -39,34 +46,62 @@ class AddTodoScreen extends StatelessWidget {
                         label: Text("Description"),
                       ),
                     ),
-                    TextField(
-                      controller: dateController,
-                      decoration: InputDecoration(
-                        label: Text("Date"),
-                      ),
+                    //  Date Picker
+                    Row(
+                      children: [
+                        Text("Date : "),
+                        TextButton(
+                          onPressed: () {
+                            _selectDate(context);
+                          },
+                          child: Text(
+                              "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                          ),
+                          onPressed: () {
+                            _selectDate(context);
+                          },
+                        ),
+                      ],
                     ),
-                
-                    SizedBox(height: 20,),
-                    
+
+                    SizedBox(
+                      height: 20,
+                    ),
+
                     Container(
                       width: 140,
                       height: 60,
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(1)),
                       child: ElevatedButton(
-                        style: ButtonStyle(),
-                        
+                        style: ButtonStyle(
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          backgroundColor:MaterialStatePropertyAll(Colors.white),
+                        ),
                         onPressed: () {
                           var todoBox = Hive.box("todoBox");
-                                      
+
                           // Make a todoModel
                           TodoModel myTodo = TodoModel(
+                            id: DateTime.now().toString(),
                               title: titleController.text,
                               description: descriptionController.text,
-                              dueDate: dateController.text);
-                                      
+                              dueDate: selectedDate,
+                              isDone: false);
+
                           // Add to todoBox
                           todoBox.add(myTodo);
                           // myTodo.save();
-                                      
+
                           // Navigate back to main page
                           Navigator.push(
                             context,
@@ -86,5 +121,22 @@ class AddTodoScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime initialDate = DateTime.now();
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2040),
+    );
+
+    if (picked != null) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
   }
 }

@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="university_attendance_app"
+        android:label="Presenty"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
 
         <activity
