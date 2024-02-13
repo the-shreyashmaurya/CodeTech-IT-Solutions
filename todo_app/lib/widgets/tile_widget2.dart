@@ -56,7 +56,9 @@ class TileWidget2 extends StatelessWidget {
                     ),
                   );
                 },
-                icon: todoList[index].isDone ? Icon(Icons.check_box):Icon(Icons.check_box_outline_blank),
+                icon: todoList[index].isDone
+                    ? Icon(Icons.check_box)
+                    : Icon(Icons.check_box_outline_blank),
               ),
 
               // Title and description
@@ -70,10 +72,16 @@ class TileWidget2 extends StatelessWidget {
                     children: [
                       Text(
                         todoList[index].title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                            color: Colors.black),
+                        style: todoList[index].isDone
+                            ? TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.black,
+                                decoration: TextDecoration.lineThrough)
+                            : TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.black),
                       ),
                       Text(
                         todoList[index].description,
@@ -103,7 +111,7 @@ class TileWidget2 extends StatelessWidget {
                               color: Colors.black),
                         ),
                         Text(
-                          "${todoList[index].dueDate}",
+                          "${todoList[index].dueDate.day}/${todoList[index].dueDate.month}/${todoList[index].dueDate.year}",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 12,
