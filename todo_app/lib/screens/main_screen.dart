@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_app/screens/add_todo_screen.dart';
-import 'package:todo_app/widgets/tile_widget.dart';
 import 'package:todo_app/widgets/tile_widget2.dart';
 
 class MainScreen extends StatefulWidget {
