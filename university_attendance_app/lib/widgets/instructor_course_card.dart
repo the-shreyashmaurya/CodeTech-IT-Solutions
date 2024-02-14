@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/courses/courses_database.dart';
 import 'package:university_attendance_app/database/courses/courses_model.dart';
+import 'package:university_attendance_app/screens/instructor_screen/instructor_course_screen.dart';
 
 class InstructorCourseCard extends StatefulWidget {
   final String courseId;
@@ -31,7 +33,15 @@ class _InstructorCourseCardState extends State<InstructorCourseCard> {
       );
     } else {
       return GestureDetector(
-        onTap: () async {},
+        onTap: () async {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  InstructorCourseScreen(courseId: widget.courseId),
+            ),
+          );
+        },
         child: Container(
           margin: EdgeInsets.only(right: 2, left: 2),
           width: 175,
@@ -71,7 +81,8 @@ class _InstructorCourseCardState extends State<InstructorCourseCard> {
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,

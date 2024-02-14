@@ -3,5 +3,7 @@ String signUpRoute = "/signup";
 String onboardingRoute = "/onboarding";
 String splashRoute = "/splash";
 String studentRoute = "/student";
+String addStudentRoute = "/addStudent";
 String instructorRoute = '/instructor';
 String addCourseRoute = '/addCourse';
+String courseDetailRoute = '/courseDetails';

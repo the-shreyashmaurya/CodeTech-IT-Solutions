@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:university_attendance_app/screens/course_screen/add_course_screen.dart';
+import 'package:university_attendance_app/screens/instructor_screen/addStudent_screen.dart';
+import 'package:university_attendance_app/screens/instructor_screen/instructor_course_screen.dart';
 import 'package:university_attendance_app/screens/instructor_screen/instructor_screen.dart';
 import 'package:university_attendance_app/screens/login_screen/login_screen.dart';
 import 'package:university_attendance_app/screens/onboarding_screen.dart';
@@ -7,6 +9,7 @@ import 'package:university_attendance_app/screens/signup_screen/signup_screen.da
 import 'package:university_attendance_app/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:university_attendance_app/screens/student_screen/student_screen.dart';
+import 'package:university_attendance_app/widgets/instructor_course_card.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -32,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/student' :(context) => const StudentScreen(),
         '/instructor':(context)=> const InstructorScreen(),
         '/addCourse':(context) => const AddCourseScreen(),
+        "/addStudent":(context)=> const AddStudentScreen(),
         // '/teacher' :(context) => const 
       },
       home: const SplashScreen(),

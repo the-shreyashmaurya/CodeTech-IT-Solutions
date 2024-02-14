@@ -63,6 +63,7 @@ class _InstructorScreenState extends State<InstructorScreen> {
                       end: Alignment.centerRight,
                     ),
                   ),
+                  
                 ),
 
                 // Hello name and logout button
@@ -130,7 +131,7 @@ class _InstructorScreenState extends State<InstructorScreen> {
                   height: 25,
                 ),
 
-                // Created Course Gridview 
+                // Created Course Gridview
                 GridView.builder(
                   physics: ScrollPhysics(),
                   shrinkWrap: true,
