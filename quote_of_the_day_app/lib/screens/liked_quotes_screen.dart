@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quote_of_the_day_app/screens/main_screen.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

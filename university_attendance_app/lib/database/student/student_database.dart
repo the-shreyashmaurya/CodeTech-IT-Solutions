@@ -28,15 +28,36 @@ class StudentDatabase {
   }
 
   Future<bool> checkStudentExists({required String id}) async {
-    print("clicked");
-    var record = await studentCollection
-        .where('id', isEqualTo: id)
-        .limit(1)
-        .get();
+    var record =
+        await studentCollection.where('id', isEqualTo: id).limit(1).get();
     if (record.docs.length == 1) {
       return true;
     } else {
       return false;
     }
+  }
+
+  // Get Student Id based on PRN
+  Future<String> getStudentIdFromPrn({required String prn}) async {
+    var record =
+        await studentCollection.where("prn", isEqualTo: prn).limit(1).get();
+
+    return record.docs[0].id;
+  }
+
+  // Add Student Courses
+  Future<void> addCourseToStudent(
+      {required String studentId, required String courseId}) async {
+    var record = await studentCollection.doc(studentId).get();
+
+    StudentModel studentModel = StudentModel(
+        name: record["name"],
+        prn: record["prn"],
+        email: record["email"],
+        degree: record["degree"],
+        semester: record["semester"],
+        courselist: record["courselist"] + [courseId]);
+
+    await studentCollection.doc(studentId).set(studentModel.toJson());
   }
 }

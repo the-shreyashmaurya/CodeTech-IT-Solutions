@@ -68,4 +68,16 @@ class AttendanceRecordsDatabase {
     print(attendanceRecord);
     return attendanceRecord;
   }
+
+  Future<List> getAttendanceOfCourse({required String courseId}) async {
+    var records = await attendanceRecordsCollection
+        .where("courseId", isEqualTo: courseId)
+        .get();
+    List attendanceList = [];
+    for (var i in records.docs) {
+      attendanceList.add(i.data());
+    }
+    
+    return attendanceList;
+  }
 }

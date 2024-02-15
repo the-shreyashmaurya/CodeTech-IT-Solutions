@@ -1,32 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
+import 'package:university_attendance_app/database/attendanceRecords/attendanceRecords_database.dart';
 import 'package:university_attendance_app/database/courses/courses_database.dart';
 import 'package:university_attendance_app/database/courses/courses_model.dart';
-import 'package:university_attendance_app/database/instructor/instructor_database.dart';
-import 'package:university_attendance_app/database/instructor/instructor_model.dart';
-import 'package:university_attendance_app/database/student/student_database.dart';
-import 'package:university_attendance_app/database/student/student_model.dart';
-import 'package:university_attendance_app/screens/attendance_screen/today_attendance_screen.dart';
-import 'package:university_attendance_app/screens/instructor_screen/addStudent_screen.dart';
-import 'package:university_attendance_app/widgets/instructor_course_card.dart';
-import 'package:university_attendance_app/widgets/student_listItem_widget.dart';
+import 'package:university_attendance_app/screens/instructor_screen/instructor_course_screen.dart';
+import 'package:university_attendance_app/widgets/attendace_listitem_widget.dart';
 
-class InstructorCourseScreen extends StatefulWidget {
+class TodayAttendanceScreen extends StatefulWidget {
   final String courseId;
 
-  const InstructorCourseScreen({super.key, required this.courseId});
+  const TodayAttendanceScreen({super.key, required this.courseId});
 
   @override
-  State<InstructorCourseScreen> createState() => _InstructorCourseScreenState();
+  State<TodayAttendanceScreen> createState() => _TodayAttendanceScreenState();
 }
 
-class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
-  var date =
-      "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
+class _TodayAttendanceScreenState extends State<TodayAttendanceScreen> {
+  List attendanceRollster = [];
   Map<String, dynamic> CourseDetails = {};
+
   bool isLoading = true;
 
   @override
@@ -39,6 +31,8 @@ class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
   asyncInit() async {
     isLoading = true;
     setState(() {});
+    attendanceRollster = await AttendanceRecordsDatabase()
+        .getAttendanceOfCourse(courseId: widget.courseId);
     CoursesModel record =
         await CoursesDatabase().getCourseDetails(courseId: widget.courseId);
     CourseDetails = record.toJson();
@@ -73,32 +67,20 @@ class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
                     ),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: IconButton(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, instructorRoute);
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          InstructorCourseScreen(
+                                              courseId: widget.courseId)));
                             },
                             icon: Icon(Icons.arrow_back_ios)),
-                      ),
-                      PopupMenuButton(
-                        icon: Icon(Icons.menu, size: 30),
-                        itemBuilder: (context) {
-                          return [
-                            PopupMenuItem(
-                                value: "GetAttendance",
-                                child: Text("Get Attendance")),
-                          ];
-                        },
-                        onSelected: (value) {
-                          if (value == "GetAttendance") {
-                            print("GetAttendance clicked");
-                            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=> TodayAttendanceScreen(courseId: widget.courseId)));
-                          }
-                        },
                       ),
                     ],
                   ),
@@ -126,13 +108,6 @@ class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
                           style: titleTextStyle,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: Text(
-                          date,
-                          style: subTitleTextStyle,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -145,27 +120,18 @@ class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
                 // List of students Enrolled
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: CourseDetails["students"].length,
+                  itemCount: attendanceRollster.length,
                   itemBuilder: (context, index) {
-                    return StudentListItemWidget(
-                      studentId: CourseDetails["students"][index],
+                    return AttendanceListItemWidget(
+                      attendanceRecord: attendanceRollster[index],
                     );
                   },
-                )
+                ),
               ],
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AddStudentScreen(courseId: widget.courseId)));
-          },
-          child: Icon(Icons.add),
-        ),
+        
       );
     }
   }

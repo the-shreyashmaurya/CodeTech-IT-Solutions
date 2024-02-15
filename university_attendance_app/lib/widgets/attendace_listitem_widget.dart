@@ -3,15 +3,16 @@ import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/student/student_database.dart';
 import 'package:university_attendance_app/database/student/student_model.dart';
 
-class StudentListItemWidget extends StatefulWidget {
-  final String studentId;
-  const StudentListItemWidget({super.key, required this.studentId});
+class AttendanceListItemWidget extends StatefulWidget {
+  final Map<String, dynamic> attendanceRecord;
+  const AttendanceListItemWidget({super.key, required this.attendanceRecord});
 
   @override
-  State<StudentListItemWidget> createState() => _StudentListItemWidgetState();
+  State<AttendanceListItemWidget> createState() =>
+      _AttendanceListItemWidgetState();
 }
 
-class _StudentListItemWidgetState extends State<StudentListItemWidget> {
+class _AttendanceListItemWidgetState extends State<AttendanceListItemWidget> {
   Map<String, dynamic> studentDetails = {};
   bool isLoading = true;
   @override
@@ -24,9 +25,11 @@ class _StudentListItemWidgetState extends State<StudentListItemWidget> {
   asyncInit() async {
     isLoading = true;
     // Get Student details
-    StudentModel studentModel =
-        await StudentDatabase().getStudentDetails(id: widget.studentId);
+    StudentModel studentModel = await StudentDatabase()
+        .getStudentDetails(id: widget.attendanceRecord["studentId"]);
     studentDetails = studentModel.toJson();
+    print(studentDetails);
+
     isLoading = false;
     setState(() {});
   }
@@ -89,17 +92,30 @@ class _StudentListItemWidgetState extends State<StudentListItemWidget> {
                         Text(
                           studentDetails["prn"],
                           style: normalTextStyle,
-                        )
+                        ),
+                        
                       ],
                     ),
+                    Row(children: [Text(
+                          "Date : ",
+                          style: TextStyle(
+                            fontFamily: "Roboto",
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          widget.attendanceRecord["date"],
+                          style: normalTextStyle,
+                        )],)
                   ],
                 ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red.shade800,
-                    ))
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(widget.attendanceRecord["isPresent"]
+                      ? Icons.check_box
+                      : Icons.check_box_outline_blank),
+                ),
               ],
             ),
           ),

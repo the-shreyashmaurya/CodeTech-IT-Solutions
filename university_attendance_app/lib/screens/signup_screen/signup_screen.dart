@@ -227,17 +227,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               degree: degreeController.text,
                                               semester: semesterController.text,
                                               courselist: [
-                                                "j4SNEY50uRwRsh1bxHot",
-                                                "rUcNDdqVv3IDfFsGH2wj"
+                                                
                                               ]),
                                         );
-                                        // StudentDatabase().saveStudentDetails(
-                                        //     id: userCredential.user!.uid,
-                                        //     name: nameController.text,
-                                        //     prn: prnController.text,
-                                        //     course: courseController.text,
-                                        //     email: emailController.text,
-                                        //     semester: semesterController.text);
+                                        
 
                                         // Navigate to Student Page
                                         Navigator.pushReplacementNamed(
@@ -371,7 +364,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     .text,
                                                 email: instructorEmailController
                                                     .text,
-                                                createdCourses: ["1"]);
+                                                createdCourses: []);
                                         // Add to Instructor Database
                                         await InstructorDatabase()
                                             .addInstructor(

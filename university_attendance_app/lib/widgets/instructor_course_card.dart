@@ -93,8 +93,8 @@ class _InstructorCourseCardState extends State<InstructorCourseCard> {
                           textAlign: TextAlign.left,
                         ),
                         Text(
-                          widget.courseDetails["instructor"],
-                          style: normalTextStyle,
+                          "No. of Students : ${widget.courseDetails["students"].length}",
+                          style: TextStyle(fontSize: 12),
                         ),
                       ],
                     ),

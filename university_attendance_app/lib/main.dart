@@ -35,8 +35,6 @@ class MyApp extends StatelessWidget {
         '/student' :(context) => const StudentScreen(),
         '/instructor':(context)=> const InstructorScreen(),
         '/addCourse':(context) => const AddCourseScreen(),
-        "/addStudent":(context)=> const AddStudentScreen(),
-        // '/teacher' :(context) => const 
       },
       home: const SplashScreen(),
     );

@@ -1,25 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:university_attendance_app/constants/elevatedButton.dart';
 import 'package:university_attendance_app/constants/inputdecoration.dart';
-import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/courses/courses_database.dart';
-import 'package:university_attendance_app/database/courses/courses_model.dart';
-import 'package:university_attendance_app/database/instructor/instructor_database.dart';
+import 'package:university_attendance_app/database/student/student_database.dart';
 import 'package:university_attendance_app/screens/instructor_screen/instructor_course_screen.dart';
 
 class AddStudentScreen extends StatefulWidget {
-  const AddStudentScreen({super.key});
+  final String courseId;
+  const AddStudentScreen({super.key, required this.courseId});
 
   @override
   State<AddStudentScreen> createState() => _AddStudentScreenState();
 }
 
 class _AddStudentScreenState extends State<AddStudentScreen> {
-  String instructorId = FirebaseAuth.instance.currentUser!.uid;
-  TextEditingController courseNameController = TextEditingController();
+  TextEditingController prnController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,11 +61,11 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                     ),
                     const SizedBox(height: 30),
 
-                    // Course name Text Field
+                    // Student PRN Text Field
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: TextField(
-                        controller: courseNameController,
+                        controller: prnController,
                         decoration: normalTextFieldDecoration(
                             labletext: "Student PRN", hintText: ""),
                         keyboardType: TextInputType.emailAddress,
@@ -81,27 +77,26 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
 
                     MyElevatedButton(
                       onPressed: () async {
-                        // Add course to database
-                        CoursesModel courseModel = CoursesModel(
-                          name: courseNameController.text,
-                          instructor: instructorId,
-                          students: [],
-                        );
+                        // Get userId using PRN
+                        String studentId = await StudentDatabase()
+                            .getStudentIdFromPrn(
+                                prn: prnController.text.trim());
+                        print(studentId);
 
-                        // Add Course to Course Database
-                        String courseId =
-                            await CoursesDatabase().addNewCourse(courseModel);
+                        // Add student to Course database
+                        await CoursesDatabase().addStudentToCourse(
+                            courseId: widget.courseId, userId: studentId);
 
-                        // Add Course to CourseList of Instructor
-                        await InstructorDatabase().addInstructorCourses(
-                            instructorId: instructorId, courseId: courseId);
+                        // Add course to Student database
+                        await StudentDatabase().addCourseToStudent(
+                            studentId: studentId, courseId: widget.courseId);
 
                         // Navigate back
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                InstructorCourseScreen(courseId: courseId),
+                                InstructorCourseScreen(courseId: widget.courseId),
                           ),
                         );
                       },
@@ -126,12 +121,6 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => InstructorCourseScreen(courseId:),
-          //   ),
-          // );
           Navigator.pop(context);
         },
         child: Icon(Icons.arrow_back),
