@@ -1,17 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/courses/courses_database.dart';
 import 'package:university_attendance_app/database/courses/courses_model.dart';
-import 'package:university_attendance_app/database/instructor/instructor_database.dart';
-import 'package:university_attendance_app/database/instructor/instructor_model.dart';
-import 'package:university_attendance_app/database/student/student_database.dart';
-import 'package:university_attendance_app/database/student/student_model.dart';
 import 'package:university_attendance_app/screens/attendance_screen/today_attendance_screen.dart';
 import 'package:university_attendance_app/screens/instructor_screen/addStudent_screen.dart';
-import 'package:university_attendance_app/widgets/instructor_course_card.dart';
 import 'package:university_attendance_app/widgets/student_listItem_widget.dart';
 
 class InstructorCourseScreen extends StatefulWidget {
