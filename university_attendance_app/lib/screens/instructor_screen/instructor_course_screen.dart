@@ -157,8 +157,6 @@ class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
                     builder: (context) =>
                         AddStudentScreen(courseId: widget.courseId)));
           },
-
-        
           child: Icon(Icons.add),
         ),
       );
