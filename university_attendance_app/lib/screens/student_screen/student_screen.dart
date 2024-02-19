@@ -40,8 +40,10 @@ class _StudentScreenState extends State<StudentScreen> {
     var date =
         "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
     if (isLoading == true) {
-      return Placeholder(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        body: Center(
+            child: Container(
+                width: 40, height: 40, child: CircularProgressIndicator())),
       );
     } else {
       return Scaffold(

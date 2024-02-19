@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:university_attendance_app/constants/routes.dart';
 import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/instructor/instructor_database.dart';
@@ -40,8 +39,10 @@ class _InstructorScreenState extends State<InstructorScreen> {
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
-      return Placeholder(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        body: Center(
+            child: Container(
+                width: 40, height: 40, child: CircularProgressIndicator())),
       );
     } else {
       return Scaffold(

@@ -3,11 +3,14 @@ import 'package:university_attendance_app/constants/textstyle.dart';
 import 'package:university_attendance_app/database/attendanceRecords/attendanceRecords_database.dart';
 import 'package:university_attendance_app/database/courses/courses_database.dart';
 import 'package:university_attendance_app/database/courses/courses_model.dart';
+import 'package:university_attendance_app/database/instructor/instructor_database.dart';
+import 'package:university_attendance_app/database/instructor/instructor_model.dart';
 
 class SubjectsCard extends StatefulWidget {
   final String courseId;
   final String studentId;
   final String date;
+  String instructorName = "";
   bool isLoading = true;
   Map<String, dynamic> courseDetails = {};
   SubjectsCard({
@@ -120,7 +123,7 @@ class _SubjectsCardState extends State<SubjectsCard> {
                         style: impNormalTextStyle,
                       ),
                       Text(
-                        widget.courseDetails["instructor"],
+                        widget.instructorName,
                         style: normalTextStyle,
                       ),
                     ],
@@ -138,9 +141,13 @@ class _SubjectsCardState extends State<SubjectsCard> {
     CoursesModel courseDetailsModel =
         await CoursesDatabase().getCourseDetails(courseId: widget.courseId);
     var course = courseDetailsModel.toJson();
+    InstructorModel instructorModel = await InstructorDatabase()
+        .getInstructorDetails(id: course["instructor"]);
+    var instructor = instructorModel.toJson();
     setState(() {
       widget.courseDetails = course;
       widget.isLoading = false;
+      widget.instructorName = instructor["name"];
     });
   }
 }

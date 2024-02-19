@@ -42,8 +42,10 @@ class _InstructorCourseScreenState extends State<InstructorCourseScreen> {
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
-      return Placeholder(
-        child: CircularProgressIndicator(),
+      return Scaffold(
+        body: Center(
+            child: Container(
+                width: 40, height: 40, child: CircularProgressIndicator())),
       );
     } else {
       return Scaffold(
